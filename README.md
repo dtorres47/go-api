@@ -60,8 +60,9 @@ A simple Go REST API with Postgres persistence.
 2. In your browser or via `curl`, visit:
 
    ```http
-   http://127.0.0.1:8081/
-   http://127.0.0.1:8081/user
+   http://127.0.0.1:8080/
+   http://127.0.0.1:8080/user
+   http://127.0.0.1:8080/users
    ```
 
 ## 📝 Lint & Format
@@ -84,13 +85,18 @@ If you want your Go app in Docker alongside Postgres, add this service to `docke
     working_dir: /app
     command: go run main.go
     ports:
-      - "8081:8081"
+      - "8080:8080"
     depends_on:
       - db
 ```
 
-Then:
+Start the container:
 
 ```bash
 docker compose up -d
+```
+Verify the container is running:
+
+```bash
+docker ps
 ```

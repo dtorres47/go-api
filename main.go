@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	// load .env (ignore error if missing)
+	// load .env (server env variables)
 	_ = godotenv.Load()
 
 	// 1) Connect to Postgres
@@ -33,6 +33,6 @@ func main() {
 
 	// 3) Register routes and start server
 	router.RegisterRoutes(userController)
-	fmt.Println("Server running on http://127.0.0.1:8081")
-	log.Fatal(http.ListenAndServe("127.0.0.1:8081", nil))
+	fmt.Println("Server running on http://127.0.0.1:8080")
+	log.Fatal(http.ListenAndServe("127.0.0.1:8080", nil))
 }

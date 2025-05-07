@@ -11,6 +11,7 @@ type User struct {
 type UserService interface {
 	GetUser() (User, error)
 	CreateUser(User) (User, error)
+	ListUsers() ([]User, error)
 }
 
 type defaultUserService struct {
@@ -35,4 +36,22 @@ func (s *defaultUserService) CreateUser(u User) (User, error) {
 		u.Name, u.Email,
 	).Scan(&u.ID)
 	return u, err
+}
+
+func (s *defaultUserService) ListUsers() ([]User, error) {
+	rows, err := s.db.Query("SELECT id, name, email FROM users ORDER BY id")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var users []User
+	for rows.Next() {
+		var user User
+		if err := rows.Scan(&user.ID, &user.Name, &user.Email); err != nil {
+			return nil, err
+		}
+		users = append(users, user)
+	}
+	return users, rows.Err()
 }
